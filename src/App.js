@@ -1,18 +1,19 @@
 import './App.css';
-import Slider from './components/Slider/Slider';
 import Navbar from './components/Navbar/Navbar';
-import Services from './components/Services/Services';
-import Footer from './components/Footer/Footer';
-import Contact from './components/Contact/Contact';
+import { Route, Routes } from 'react-router-dom';
+import Home from './pages/Home/Home';
+import About from './pages/About/About';
+import Register from './pages/Register/Register';
 
 function App() {
   return (
     <div className="App">
       <Navbar></Navbar>
-      <Slider></Slider>
-      <Services></Services>
-      <Contact></Contact>
-      <Footer></Footer>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="about" element={<About />} />
+        <Route path="register" element={<Register></Register>} />
+      </Routes>
     </div>
   );
 }
