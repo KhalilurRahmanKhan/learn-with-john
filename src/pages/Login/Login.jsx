@@ -6,6 +6,7 @@ import auth from '../../firebase.init';
 
 const Login = () => {
 
+  const [error, setError] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState(''); 
 
@@ -22,6 +23,7 @@ const Login = () => {
     navigate('/');
   })
   .catch((error) => {
+    setError(error.message);
   });
     }
 
@@ -29,6 +31,7 @@ const Login = () => {
       signInWithPopup(auth, provider)
       .then((result) => {        
       }).catch((error) => {
+        setError(error.message);
       });
      }
 
@@ -48,6 +51,9 @@ const Login = () => {
                         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="password" placeholder="Password"/>
                         <label >Password</label>
                         </div>
+                        {
+                          error ? <small>{error}</small> : ''
+                        }
                       
 
                         <button onClick={handleLogin} className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button><p></p>

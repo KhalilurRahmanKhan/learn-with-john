@@ -6,7 +6,8 @@ import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
 
-    const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState(''); 
   const navigate = useNavigate();
 
@@ -25,8 +26,8 @@ createUserWithEmailAndPassword(auth, email, password)
 
   })
   .catch((error) => {
-    const errorMessage = error.message;
-    console.log(errorMessage);
+    setError(error.message);
+
   
   });
  }
@@ -36,6 +37,7 @@ createUserWithEmailAndPassword(auth, email, password)
   .then((result) => {
     navigate('/');
   }).catch((error) => {
+    setError(error.message);
   });
  }
     return (
@@ -53,7 +55,9 @@ createUserWithEmailAndPassword(auth, email, password)
                         <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} className="form-control" id="password" placeholder="Password"/>
                         <label >Password</label>
                         </div>
-                      
+                        {
+                          error ? <small>{error}</small> : ''
+                        }
 
                         <button onClick={handleRegister} className="w-100 btn btn-lg btn-primary" type="submit">SignUp</button><p></p>
                         <button onClick={handleGoogleRegister} className="w-100 btn btn-lg btn-success" type="submit">SignUp with Google</button><br />
