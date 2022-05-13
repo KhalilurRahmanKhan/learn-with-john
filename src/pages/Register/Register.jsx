@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
 import auth from '../../firebase.init';
 import { createUserWithEmailAndPassword, GoogleAuthProvider, sendEmailVerification, signInWithPopup, signOut } from 'firebase/auth';
-import { useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import Footer from '../../components/Footer/Footer';
 
 
 const Register = () => {
@@ -17,8 +20,10 @@ const Register = () => {
   function handleSendEmailVerification(){
     sendEmailVerification(auth.currentUser)
   .then(() => {
-    // Email verification sent!
-    // ...
+  
+    toast("Email verification sent!");
+
+  
   });
   }
 
@@ -32,6 +37,8 @@ createUserWithEmailAndPassword(auth, email, password)
 
 
     handleSendEmailVerification();
+    setEmail('');
+    setPassword('');
 
     if(user.emailVerified === true){
       navigate('/');
@@ -40,7 +47,6 @@ createUserWithEmailAndPassword(auth, email, password)
       signOut(auth).then(() => {
           }).catch((error) => {
           });
-      setError('Email is not verified');
     }
 
   })
@@ -78,15 +84,18 @@ createUserWithEmailAndPassword(auth, email, password)
                         <label >Password</label>
                         </div>
                         {
-                          error ? <small>{error}</small> : ''
+                          error ? <small className='text-danger'>{error}</small> : ''
                         }
 
                         <button onClick={handleRegister} className="w-100 btn btn-lg btn-primary" type="submit">SignUp</button><p></p>
                         <button onClick={handleGoogleRegister} className="w-100 btn btn-lg btn-success" type="submit">SignUp with Google</button><br />
-                       
+                        <p>Already signed up? {<Link to={'/signin'}>Login </Link>}here.</p>
+                        
+                     <ToastContainer />
+
                    </div>
                    </div>             
-           
+           <Footer></Footer>
         </div>
     );
 };

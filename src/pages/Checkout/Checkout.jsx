@@ -1,9 +1,11 @@
 import React from 'react';
+import Footer from '../../components/Footer/Footer';
 
 const Checkout = () => {
     return (
         <div>
-            kjghkuj
+           Checkout
+           <Footer></Footer>
         </div>
     );
 };

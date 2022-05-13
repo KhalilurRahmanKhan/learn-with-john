@@ -1,9 +1,10 @@
 import { GoogleAuthProvider, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import React, { useState } from 'react';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import Footer from '../../components/Footer/Footer';
 
 
 const Login = () => {
@@ -37,11 +38,15 @@ const from = location.state?.from?.pathname || '/';
   .catch((error) => {
     setError(error.message);
   });
+
+  setEmail('');
+    setPassword('');
     }
 
     function handleGoogleLogin(){
       signInWithPopup(auth, provider)
-      .then((result) => {        
+      .then((result) => {  
+        navigate(from,{replace:true});    
       }).catch((error) => {
         setError(error.message);
       });
@@ -77,17 +82,19 @@ function handleResetPassword(){
                         <label >Password</label>
                         </div>
                         {
-                          error ? <small>{error}</small> : ''
+                          error ? <small className='text-danger'>{error}</small> : ''
                         }
                       
 
                         <button onClick={handleLogin} className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button><p></p>
                         <button onClick={handleGoogleLogin} className="w-100 btn btn-lg btn-success" type="submit">SignIn with Google</button>
                      <button className='btn btn-link' onClick={handleResetPassword}>Forget password?</button>
+                     <p>Not signed up yet? {<Link to={'/signup'}>Register </Link>}here.</p>
+
                      <ToastContainer />
                    </div>
                    </div>             
-           
+           <Footer></Footer>
         </div>
     );
 };
