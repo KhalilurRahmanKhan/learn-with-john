@@ -23,22 +23,19 @@ createUserWithEmailAndPassword(auth, email, password)
 
     navigate('/');
 
-    // ...
   })
   .catch((error) => {
     const errorMessage = error.message;
     console.log(errorMessage);
-    // ..
+  
   });
  }
 
  function handleGoogleRegister(){
   signInWithPopup(auth, provider)
   .then((result) => {
-    const user = result.user;
     navigate('/');
   }).catch((error) => {
-    const errorMessage = error.message;
   });
  }
     return (

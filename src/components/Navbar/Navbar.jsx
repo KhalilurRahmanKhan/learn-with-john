@@ -10,20 +10,20 @@ const Navbar = () => {
 
     const navigate = useNavigate();
 
-    const [user,setUser] = useState({});
-    onAuthStateChanged(auth, (user) => {
-        if (user) {
+    // const [user,setUser] = useState({});
+    // onAuthStateChanged(auth, (user) => {
+    //     if (user) {
      
-          setUser(user);
+    //       setUser(user);
           
-        } 
-      });
+    //     } 
+    //   });
 
 
       function handleSignout(){
         signOut(auth).then(() => {
         navigate('/signin');
-        setUser({});
+        // setUser({});
           }).catch((error) => {
             // An error happened.
           });
@@ -49,7 +49,7 @@ const Navbar = () => {
                     <Link className='link' to="/">Home</Link>
                     </li>
                     <li className="nav-item">
-                    <Link className='link' to="/blog">Blog</Link>
+                    <Link className='link' to="blog">Blog</Link>
                     </li>
                     <li className="nav-item">
                     <Link className='link' to="/about">About</Link>
@@ -61,11 +61,11 @@ const Navbar = () => {
                         <Link to="/signup" className='link'>SignUp</Link>
                         </li>
                     {
-                        user.uid ? 
+                        auth.currentUser ? 
                         <button onClick={handleSignout} className='btn btn-sm btn-danger'>Logout</button>
                         : 
                         <li className="nav-item">
-                        <Link to="/signin" className='link'>SignIn</Link>
+                          <Link to="/signin" className='link'>SignIn</Link>
                         </li>
                     }
                    

@@ -12,7 +12,7 @@ const Home = () => {
             <Slider></Slider>
             <div className="container mt-5 mb-5">
             <h1 className='text-center mb-5'>Services</h1>
-            <div class="row">
+            <div className="row">
             {
            data.map(data => <Services data={data} key={data.id}></Services>)
          }

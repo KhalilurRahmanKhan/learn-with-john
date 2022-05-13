@@ -5,12 +5,13 @@ import auth from '../../firebase.init';
 
 
 const Login = () => {
-  const navigate = useNavigate();
 
-    const [email, setEmail] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState(''); 
 
   const provider = new GoogleAuthProvider();
+  const navigate = useNavigate();
+
 
 
 
@@ -18,23 +19,16 @@ const Login = () => {
     function handleLogin(){
       signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
-    console.log(userCredential);
-
     navigate('/');
   })
   .catch((error) => {
-    const errorMessage = error.message;
-    console.log(errorMessage);
   });
     }
 
     function handleGoogleLogin(){
       signInWithPopup(auth, provider)
-      .then((result) => {
-        const user = result.user;
-        navigate('/');
+      .then((result) => {        
       }).catch((error) => {
-        const errorMessage = error.message;
       });
      }
 
