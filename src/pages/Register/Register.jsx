@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import auth from '../../firebase.init';
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { createUserWithEmailAndPassword, GoogleAuthProvider, sendEmailVerification, signInWithPopup, signOut } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 
 
@@ -14,15 +14,34 @@ const Register = () => {
   const provider = new GoogleAuthProvider();
 
 
+  function handleSendEmailVerification(){
+    sendEmailVerification(auth.currentUser)
+  .then(() => {
+    // Email verification sent!
+    // ...
+  });
+  }
+
+
 
  function handleRegister(){
 createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed in 
     const user = userCredential.user;
-    console.log(user);
 
-    navigate('/');
+
+    handleSendEmailVerification();
+
+    if(user.emailVerified === true){
+      navigate('/');
+    }
+    else{
+      signOut(auth).then(() => {
+          }).catch((error) => {
+          });
+      setError('Email is not verified');
+    }
 
   })
   .catch((error) => {
@@ -35,7 +54,10 @@ createUserWithEmailAndPassword(auth, email, password)
  function handleGoogleRegister(){
   signInWithPopup(auth, provider)
   .then((result) => {
+
     navigate('/');
+    
+    
   }).catch((error) => {
     setError(error.message);
   });

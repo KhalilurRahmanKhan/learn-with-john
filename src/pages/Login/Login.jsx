@@ -1,7 +1,9 @@
-import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth';
+import { GoogleAuthProvider, sendPasswordResetEmail, signInWithEmailAndPassword, signInWithPopup, signOut } from 'firebase/auth';
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import auth from '../../firebase.init';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 
 const Login = () => {
@@ -12,15 +14,25 @@ const Login = () => {
 
   const provider = new GoogleAuthProvider();
   const navigate = useNavigate();
+  const location = useLocation();
 
-
+const from = location.state?.from?.pathname || '/';
 
 
 
     function handleLogin(){
       signInWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
-    navigate('/');
+    if(userCredential.user.emailVerified === true){
+
+      navigate(from,{replace:true});
+    }
+    else{
+      signOut(auth).then(() => {
+    }).catch((error) => {
+    });
+      setError('Email is not verified');
+    }
   })
   .catch((error) => {
     setError(error.message);
@@ -34,7 +46,20 @@ const Login = () => {
         setError(error.message);
       });
      }
+function handleResetPassword(){
+  sendPasswordResetEmail(auth, email)
+  .then(() => {
 
+    toast("Password reset email sent!");
+ 
+  })
+  .catch((error) => {
+  
+    const errorMessage = error.message;
+    setError(errorMessage);
+
+  });
+}
 
     return (
         <div>
@@ -58,7 +83,8 @@ const Login = () => {
 
                         <button onClick={handleLogin} className="w-100 btn btn-lg btn-primary" type="submit">Sign in</button><p></p>
                         <button onClick={handleGoogleLogin} className="w-100 btn btn-lg btn-success" type="submit">SignIn with Google</button>
-                     
+                     <button className='btn btn-link' onClick={handleResetPassword}>Forget password?</button>
+                     <ToastContainer />
                    </div>
                    </div>             
            
