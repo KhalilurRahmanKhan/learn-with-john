@@ -94,7 +94,6 @@ function handleResetPassword(){
                      <ToastContainer />
                    </div>
                    </div>             
-           <Footer></Footer>
         </div>
     );
 };

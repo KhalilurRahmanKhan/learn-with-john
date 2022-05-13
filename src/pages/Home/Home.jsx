@@ -1,6 +1,5 @@
 import React from 'react';
 import Contact from '../../components/Contact/Contact';
-import Footer from '../../components/Footer/Footer';
 import Services from '../../components/Services/Services';
 import Slider from '../../components/Slider/Slider';
 import data from "../../data";
@@ -19,7 +18,6 @@ const Home = () => {
           </div>
         </div>
             <Contact></Contact>
-            <Footer></Footer>
         </div>
     );
 };

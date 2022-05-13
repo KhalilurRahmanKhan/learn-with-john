@@ -9,6 +9,7 @@ import Checkout from './pages/Checkout/Checkout';
 import RequireAuth from './RequireAuth';
 import Blog from './pages/Blog/Blog';
 import NotFound from './pages/404/NotFound';
+import Footer from './components/Footer/Footer';
 
 function App() {
 
@@ -27,6 +28,7 @@ function App() {
         <Route path="/signup" element={<Register></Register>} />
         <Route path="*" element={<NotFound></NotFound>} />
       </Routes>
+      <Footer></Footer>
     </div>
   );
 }
